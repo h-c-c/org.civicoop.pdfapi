@@ -9,6 +9,11 @@ Parameters for the api are specified below:
 - to_email: e-mail address where the pdf file is send to
 - pdf_format_id: (optional) ID of the PDF format, is not especified the default PDF format is used
 
-*It is not possible to specify your own message through the API.*
+*NEW* Parameters added for use with the giftcard-dev branch of CiviDiscount
 
+This giftcard-dev branch is a dependency of: https://github.com/h-c-c/org.civicrm.module.cividiscount/tree/giftcard-dev
+
+- message_text: appears in email body.
+- giftcard_id: gift card code that can be redeemed.
+- giftcard_amount: gift card amount, for displaying to the recipient. 
 
