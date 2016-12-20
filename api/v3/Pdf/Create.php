@@ -12,6 +12,9 @@ function _civicrm_api3_pdf_create_spec(&$spec) {
   $spec['contact_id']['api.required'] = 1;
   $spec['template_id']['api.required'] = 1;
   $spec['to_email']['api.required'] = 1;
+  $spec['message_text']['api.required'] = 1;
+  $spec['giftcard_id']['api.required'] = 0;
+  $spec['giftcard_amount']['api.required'] = 0;
 }
 
 /**
@@ -108,6 +111,8 @@ function civicrm_api3_pdf_create($params) {
       $smarty = CRM_Core_Smarty::singleton();
       // also add the contact tokens to the template
       $smarty->assign_by_ref('contact', $contact);
+      $smarty->assign_by_ref('giftcard_id', $params['giftcard_id']);
+      $smarty->assign_by_ref('giftcard_amount', $params['giftcard_amount']);
       $html_message = $smarty->fetch("string:$html_message");
     }
 
@@ -163,8 +168,8 @@ function civicrm_api3_pdf_create($params) {
     'from' => $from,
     'toName' => $from[0],
     'toEmail' => $params['to_email'],
-    'subject' => 'PDF Letter from Civicrm - ' . $messageTemplates->msg_title,
-    'text' => "CiviCRM has generated a PDF letter",
+    'subject' => $messageTemplates->msg_title,
+    'text' => $params['message_text'],
     'attachments' => array(
         array(
             'fullPath' => $tmpFileName,
